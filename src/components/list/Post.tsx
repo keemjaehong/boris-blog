@@ -2,6 +2,16 @@ import { Link } from 'react-router-dom'
 import { PostDto } from '../../dto/PostDto';
 import styled from 'styled-components';
 
+
+export const getParametersForUnsplash = ({ width, height, quality, format }: {
+  width: number;
+  height: number;
+  quality: number;
+  format: string;
+}) => {
+  return `?w=${width}&h=${height}&q=${quality}&fm=${format}&fit=crop`
+}
+
 interface PostProps {
   post: PostDto;
 }
@@ -15,15 +25,6 @@ const Post = ({ post }: PostProps) => {
   const getDateTime = () => {
     const createdTime = new Date(post.createdTime);
     return `${createdTime.getFullYear()}.${substringWithZeroPad(createdTime.getMonth() + 1, 2)}.${substringWithZeroPad(createdTime.getDate(), 2)}`
-  }
-
-  const getParametersForUnsplash = ({width, height, quality, format}: {
-    width: number;
-    height: number;
-    quality: number;
-    format: string;
-  }) => {
-    return `?w=${width}&h=${height}&q=${quality}&fm=${format}&fit=crop`
   }
 
   /*
@@ -64,8 +65,8 @@ const Post = ({ post }: PostProps) => {
               * 필요 이상의 큰 이미지 파일을 요청하여 로딩이 오래걸립니다.
               * 적절한 이미지의 사이즈는 영역 사이즈의 2배 정도 입니다.
               * 최적화된 이미지 포멧을 사용해 사이즈를 줄일 수 있습니다.
-            */}        
-            <ItemImg src={`${post.image}${getParametersForUnsplash({width: 2048, height: 2048, quality: 80, format: 'jpg'})}`} alt={'img'}/>
+            */}
+            <ItemImg src={`${post.image}${getParametersForUnsplash({ width: 256, height: 256, quality: 80, format: 'jpg' })}`} alt={'img'} />
           </div>
           <ContentArea>
             <h2>{post.title}</h2>
